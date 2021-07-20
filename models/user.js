@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-    username: {type:String, unique:true, lowercase:true},
-    password: {type:string},
+    email: {type:String, unique:true, lowercase:true, default:"nomail@user"},
+    password: {type:String, default:"0000"},
     isAdmin: {type:Boolean, default: false}
 });
 

@@ -11,7 +11,8 @@ const createInstrument = async (_name, _brand, _category, _imgPath, _description
         description: _description,
         reviews: _reviews,
         quantity: _quantity,
-        price: _price
+        price: _price,
+        sold: _sold
     });
     return await instrument.save();
 }
