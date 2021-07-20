@@ -6,5 +6,5 @@ const User = new Schema({
     password: {type:string},
     isAdmin: {type:Boolean, default: false}
 });
-
+// a change
 module.exports = mongoose.model("User", User);
