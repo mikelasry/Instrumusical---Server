@@ -3,8 +3,8 @@ const instrumentsService = require('../services/instrument');
 // create
 const createInstrument = async (req, res) => {
     console.log('Creating');
-    const {name,brand,category,imgPath,description,reviews,quantity,price} = req.body;
-    const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price);
+    const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
+    const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
     return res.json(newInstrument);
 }
 

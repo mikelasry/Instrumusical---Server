@@ -2,10 +2,12 @@
   "name": "Instrumusical-Server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=local&&  nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "linux-start": "NODE_ENV=local  nodemon app.js",
+    "linux-test": "NODE_ENV=test  nodemon app.js",
+    "windows-start": "SET NODE_ENV=local&&  nodemon app.js",
+    "windows-test": "SET NODE_ENV=test&&  nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "custom-env": "^2.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.13.3",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "package.json": "^2.0.1"
   }
 }
