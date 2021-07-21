@@ -1,65 +1,73 @@
-const instrument = require('../models/instrument');
 const Instrument = require('../models/instrument');
 
-// create
-const createInstrument = async (_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price) => {
+
+/* ############################## Instruments CRUD ##############################  */
+const createInstrument = async (name,brand,category,imgPath,description,reviews,quantity,price,sold) => {
     const instrument = new Instrument({
-        name: _name,
-        brand: _brand,
-        category: _category,
-        imgPath: _imgPath,
-        description: _description,
-        reviews: _reviews,
-        quantity: _quantity,
-        price: _price,
-        sold: _sold
+        name: name,
+        brand: brand,
+        category: category,
+        imgPath: imgPath,
+        description: description,
+        reviews: reviews,
+        quantity: quantity,
+        price: price,
+        sold: sold
     });
     return await instrument.save();
 }
 
-// read one
-const getInstrumentById = async (id) => {
-    return await Instrument.findById(id);
-}
-
-
-// read many
-const getInstruments = async () =>{
-    return await Instrument.find({});
-}
-
-// read by category
-const getInstrumentsByCategory = async (category) => {
-    return await Instrument.find({'category':category})
-}
-
-// update
-const updateInstrument = async (_id,_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price)=>{
-    const instrument = await getInstrumentById(_id);
-    if (!instrument) return false;
-    if (_name) instrument.name = _name;
-    if (_brand) instrument.brand = _brand;
-    if (_category) instrument.category = _category;
-    if (_imgPath) instrument.imgPath = _imgPath;
-    if (_description) instrument.description = _description;
-    if (_reviews) instrument.reviews = _reviews;
-    if (_quantity) instrument.quantity = _quantity;
-    if (_price) instrument.price = _price;
-}
-
-// delete
 const deleteInstrument = async (id) => {
-    const instrument = await getInstrumentById(id);
-    // if (!instrument) return false;
+    const instrument = await Instrument.findById(id);
+    if (!instrument) return false;
     await instrument.remove();
     return true;
 }
 
+const updateInstrument = async (id,name,brand,category,imgPath,description,reviews,quantity,price) => {
+    const instrument = await Instrument.findById(id);
+    if (instrument){
+        if (name) instrument.name = name;
+        if (brand) instrument.brand = brand;
+        if (category) instrument.category = category;
+        if (imgPath) instrument.imgPath = imgPath;
+        if (description) instrument.description = description;
+        if (reviews) instrument.reviews = reviews;
+        if (quantity) instrument.quantity = quantity;
+        if (price) instrument.price = price;
+        if (sold) instrument.sold = sold;
+    }
+    return instrument;
+}
+
+//   MAIN PAGE LOGIC- top sellers   //
+const getTopSellers = async () => {
+    return Instrument.find({}).sort({sold:-1}).limit(4);
+}
+
+//   GUITARS   //
+
+const readAllGuitars = async () => {
+    return Instrument.find({category:"guitars"})
+}
+
+//   DRUMS   //
+
+
+//   KEYS   //
+
+
+//   DJ GEAR   //
+
+
+//   ACCESSORIES   //
+
+
 module.exports = {
+    createInstrument,
     deleteInstrument,
     updateInstrument,
-    getInstrumentsByCategory,
-    getInstruments,
-    getInstrumentById,
-    createInstrument
+    getTopSellers,
+    readAllGuitars,
+
 }
