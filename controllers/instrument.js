@@ -8,6 +8,7 @@ const getTopSellers = async (req,res) => {
     if(topSellers) return res.status(200).json(topSellers);
     return res.status(404).json();
 }
+
 //   GUITARS   //
 const readAllGuitars = async (req,res) => {
     const guitars = await instrumentsService.readAllGuitars();
