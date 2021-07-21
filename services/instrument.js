@@ -2,7 +2,7 @@ const instrument = require('../models/instrument');
 const Instrument = require('../models/instrument');
 
 // create
-const createInstrument = async (_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price) => {
+const createInstrument = async (_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price, _sold) => {
     const instrument = new Instrument({
         name: _name,
         brand: _brand,
@@ -11,7 +11,8 @@ const createInstrument = async (_name, _brand, _category, _imgPath, _description
         description: _description,
         reviews: _reviews,
         quantity: _quantity,
-        price: _price
+        price: _price,
+        sold: _sold
     });
     return await instrument.save();
 }
@@ -33,7 +34,7 @@ const getInstrumentsByCategory = async (category) => {
 }
 
 // update
-const updateInstrument = async (_id,_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price)=>{
+const updateInstrument = async (_id,_name, _brand, _category, _imgPath, _description, _reviews, _quantity, _price, _sold)=>{
     const instrument = await getInstrumentById(_id);
     if (!instrument) return false;
     if (_name) instrument.name = _name;
@@ -44,6 +45,7 @@ const updateInstrument = async (_id,_name, _brand, _category, _imgPath, _descrip
     if (_reviews) instrument.reviews = _reviews;
     if (_quantity) instrument.quantity = _quantity;
     if (_price) instrument.price = _price;
+    if (_sold) instrument.sold = _sold;
 }
 
 // delete
