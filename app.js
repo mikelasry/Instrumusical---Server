@@ -8,6 +8,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 //routes
 const instrumentRoute = require('./routes/instrument')//TODO rest of the routes
+const userRoute = require('./routes/user');
+
 // define global variables through "config" directory
 require('custom-env').env(process.env.NODE_ENV, './config');
 
@@ -18,6 +20,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use('/instruments',instrumentRoute);//TODO rest of the modules
+app.use('/user', userRoute);
+
 console.log(`listening on ${process.env.PORT}`);
 
 app.listen(process.env.PORT);
