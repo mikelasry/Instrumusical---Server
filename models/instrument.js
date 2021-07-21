@@ -13,4 +13,4 @@ const Instrument = new Schema({
     sold: {type: Number}
 });
 
-module.exports = mongoose.model("Instrument", Instrument);``
+module.exports = mongoose.model("Instrument", Instrument);
