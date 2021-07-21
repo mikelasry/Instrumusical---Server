@@ -27,13 +27,6 @@ const updateUser = async (_id, _password) => {
     const user = await User.findById(_id);
     if(!user) return false;
     User.updateOne({"_id": _id},{"password": _password}).exec();
-    // const newUser = new User({
-        
-    //     email: user.email,
-    //     password: _password,
-    //     isAdmin: user.isAdmin
-    // });
-    // newUser.save();
     return true;
 }
 
@@ -45,10 +38,35 @@ const deleteUser = async (_id) => {
     return true;
 }
 
+
+const findByEmail = async (_email) => {
+    const user = User.findOne({"email":_email}).exec();
+    if(!user) return null;
+    return user;
+}
+
+const logUser = async (_user) => {
+    /*
+    _user from frontend = {
+        connect: boolean,   (true: log in | false: log out)
+        email: string,      (to find user by email)
+        password: string    (compare with db user password)
+    }
+    */  
+    if (!_user || !_user.email) return false; // got an empty obj / no email field
+    const user = await findByEmail(_user.email); // find user by email
+    if (!user || _user.connect==undefined) return false; // user not found / no connect field
+    if (user.connected == _user.connect) return true; // asked operation already applied
+    if (_user.connect && (user.password != _user.password)) return false;  // user wants to log in but password incorrect
+    User.updateOne({"_id": user._id},{"connected": _user.connect}).exec();
+    return true;
+}
+
 module.exports = {
     createUser,
     getUserById,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    logUser
 }

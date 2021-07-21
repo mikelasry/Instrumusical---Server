@@ -47,10 +47,31 @@ const deleteUser = async (req,res) => {
     res.status(200).json({success:success});
 }
 
+const logUser = async (req, res) => {
+    // console.log(`(usersController: logUser) ---> {connect, email, password}: ${req.body.connect}, ${req.body.email}, ${req.body.password}`);
+    if (req.body.connect==undefined || !req.body.email ) 
+        return res.status(404).json({
+            success:false,
+            errors:["One or more of the following fields are missing: [action,email]"]
+        });
+    
+    const user = {
+        connect: req.body.connect,
+        email: req.body.email,
+        password: req.body.password
+    }
+
+    const success = await usersService.logUser(user);
+    // console.log(`(usersController: logUser) ---> success: ${success}`);
+    const status = (success ? 200 : 404);
+    return res.status(status).json({success: success});
+}
+
 module.exports = {
     createUser,
     getUserById,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    logUser
 }
