@@ -17,7 +17,7 @@ var app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
-app.use('/instrument',instrumentRoute);//TODO rest of the modules
+app.use('/instruments',instrumentRoute);//TODO rest of the modules
 console.log(`listening on ${process.env.PORT}`);
 
 app.listen(process.env.PORT);
