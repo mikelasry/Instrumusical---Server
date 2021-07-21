@@ -2,7 +2,7 @@ const instrumentsService = require('../services/instrument');
 
 // create
 const createInstrument = async (req, res) => {
-    console.log('Creating');
+    // console.log('Creating');
     const {name,brand,category,imgPath,description,reviews,quantity,price} = req.body;
     const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price);
     return res.json(newInstrument);
@@ -18,9 +18,9 @@ const getInstrumentById = async (req, res) => {
 
 // read many
 const getInstruments = async (req, res) => {
-    console.log("in fet instruments (controller)");
+    // console.log("in fet instruments (controller)");
     const instruments = await instrumentsService.getInstruments();
-    console.log(typeof(instruments));
+    // console.log(typeof(instruments));
     return res.status(200).json(instruments);
 }
 

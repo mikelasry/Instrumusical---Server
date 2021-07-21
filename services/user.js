@@ -53,13 +53,15 @@ const logUser = async (_user) => {
         password: string    (compare with db user password)
     }
     */  
+
+    // console.log("(Inside of users Service:logUser) ---> user: " + _user);
     if (!_user || !_user.email) return false; // got an empty obj / no email field
     const user = await findByEmail(_user.email); // find user by email
-    if (!user || _user.connect==undefined) return false; // user not found / no connect field
-    if (user.connected == _user.connect) return true; // asked operation already applied
+    if (!user || _user.connect == undefined) return false; // user not found / no connect field
+    if (user.connected == _user.connect) return user; // asked operation already applied
     if (_user.connect && (user.password != _user.password)) return false;  // user wants to log in but password incorrect
     User.updateOne({"_id": user._id},{"connected": _user.connect}).exec();
-    return true;
+    return user;
 }
 
 module.exports = {

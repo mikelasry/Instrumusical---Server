@@ -8,6 +8,4 @@ const User = new Schema({
     connected:{type:Boolean, default: false}
 });
 
-
-
 module.exports = mongoose.model("User", User);
