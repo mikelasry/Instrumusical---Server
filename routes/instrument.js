@@ -3,6 +3,7 @@ const instrumentsController = require('../controllers/instrument');
 
 
 /* ############################## Instruments CRUD ##############################  */
+
 //   MAIN PAGE LOGIC   //
 router.route('/')
         .get(instrumentsController.getTopSellers);
