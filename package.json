@@ -19,6 +19,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.3",
     "nodemon": "^2.0.12",
-    "package.json": "^2.0.1"
+    "package.json": "^2.0.1",
+    "passport": "^0.4.1",
+    "passport-local-mongoose": "^6.1.0"
   }
 }
