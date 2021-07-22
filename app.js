@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 // mongoDB driver, provide straigh-forward access and a scheme-based solution
 const mongoose = require('mongoose');
+
 //routes
 const instrumentRoute = require('./routes/instrument');//TODO rest of the routes
 const userRoute = require('./routes/user');
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/instruments',instrumentRoute);//TODO rest of the modules
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
+
 console.log(`listening on ${process.env.PORT}`);
 
 app.listen(process.env.PORT);

@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "linux-start-debug": "NODE_ENV=local  DEBUG=express:* nodemon app.js",
     "linux-start": "NODE_ENV=local  nodemon app.js",
     "linux-test": "NODE_ENV=test  nodemon app.js",
     "windows-start": "SET NODE_ENV=local&&  nodemon app.js",

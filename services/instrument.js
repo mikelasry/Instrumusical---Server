@@ -52,16 +52,30 @@ const readAllGuitars = async () => {
 }
 
 //   DRUMS   //
-
+const readAllDrums = async () => {
+    return Instrument.find({category:"drums"})
+}
 
 //   KEYS   //
-
+const readAllKeys = async () => {
+    return Instrument.find({category:"keys"})
+}
 
 //   DJ GEAR   //
-
+const readAllDJGear = async () => {
+    return Instrument.find({category:"DJGear"})
+}
 
 //   ACCESSORIES   //
+const readAllAccessories = async () => {
+    return Instrument.find({category:"accessories"})
+}
 
+//   BRANDS   //
+const getBrandInstrumentList = async (brandName) =>{
+    return Instrument.find({brand: brandName});
+
+}
 
 module.exports = {
     createInstrument,
@@ -69,5 +83,9 @@ module.exports = {
     updateInstrument,
     getTopSellers,
     readAllGuitars,
-
+    readAllDrums,
+    readAllKeys,
+    readAllDJGear,
+    readAllAccessories,
+    getBrandInstrumentList,
 }

@@ -1,6 +1,6 @@
 const instrumentsService = require('../services/instrument');
 
-/* ############################## Instruments CRUD ##############################  */
+    //this.instruments = instruments;
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async (req,res) => {
@@ -9,26 +9,21 @@ const getTopSellers = async (req,res) => {
     return res.status(404).json();
 }
 
-//   GUITARS   //
-const readAllGuitars = async (req,res) => {
-    const guitars = await instrumentsService.readAllGuitars();
-    if(guitars) return res.status(200).json(guitars);
-    return res.status(404).json();
-}
-const createGuitar = async (req,res) => {
+//  INSTRUMENT   //
+const createInstrument = async (req,res) => {
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
     const newGuitar = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
     if(newGuitar) return res.status(200).json(newGuitar);
     return res.status(404).json();
 
 }
-const deleteGuitar = async (req,res) => {
+const deleteInstrument = async (req,res) => {
     success = instrumentsService.deleteInstrument(req.params.id);
     if(!success)
         res.status(404).json({errors:['Instrument not found!']});
     res.status(200);
 }
-const updateGuitar = async (req,res) => {
+const updateInstrument = async (req,res) => {
     if (!req.body) return res.status(400).json({errors:['Instrument features required!']});
     const {name,brand,category,imgPath,description,reviews,quantity,price} = req.body;
     const updatedInstrument = await instrumentsService.updateInstrument(req.param.id, name,brand,category,imgPath,description,reviews,quantity,price);
@@ -36,82 +31,61 @@ const updateGuitar = async (req,res) => {
     return res.status(400).json({errors:['Update failed, please try again']});
 }
 
+//   GUITARS   //
+const readAllGuitars = async (req,res) => {
+    const guitars = await instrumentsService.readAllGuitars();
+    if(guitars) return res.status(200).json(guitars);
+    return res.status(404).json();
+}
+
+
 //   DRUMS   //
 const readAllDrums = async (req,res) => {
-    
-}
-const createDrum = async (req,res) => {
-    
-}
-const deleteDrum = async (req,res) => {
-    
-}
-const updateDrum = async (req,res) => {
+    const drums = await instrumentsService.readAllDrums();
+    if(drums) return res.status(200).json(drums);
+    return res.status(404).json();
     
 }
 
+
 //   KEYS   //
 const readAllKeys = async (req,res) => {
-    
+    const keys = await instrumentsService.readAllKeys();
+    if(keys) return res.status(200).json(keys);
+    return res.status(404).json();
 }
-const createKey = async (req,res) => {
     
-}
-const deleteKey = async (req,res) => {
-    
-}
-const updateKey = async (req,res) => {
-    
-}
 //   DJ GEAR   //
 const readAllDJGear = async (req,res) => {
-    
+    const djGear = await instrumentsService.readAllDJGear();
+    if(djGear) return res.status(200).json(djGear);
+    return res.status(404).json();
 }
-const createDJGear = async (req,res) => {
-    
-}
-const deleteDJGear = async (req,res) => {
-    
-}
-const updateDJGear = async (req,res) => {
-    
-}
+
 //   ACCESSORIES   //
 const readAllAccessories = async (req,res) => {
-    
+    const accessories = await instrumentsService.readAllAccessories();
+    if(accessories) return res.status(200).json(accessories);
+    return res.status(404).json();
 }
-const createAccessory = async (req,res) => {
-    
-}
-const deleteAccessory = async (req,res) => {
-    
-}
-const updateAccessory = async (req,res) => {
-    
+
+//   BRANDS   //
+const getBrandsInstruments = async (req,res) => {
+    const brandInstruments = await instrumentsService.getBrandInstrumentList(req.query.brandKey);
+    if(!brandInstruments) return res.status(404).json();
+    return res.status(200).json(brandInstruments);
 }
 
 
 module.exports = {
     getTopSellers,
     readAllGuitars,
-    createGuitar,
-    deleteGuitar,
-    updateGuitar,
+    createInstrument,
+    deleteInstrument,
+    updateInstrument,
     readAllDrums,
-    createDrum,
-    deleteDrum,
-    updateDrum,
     readAllKeys,
-    createKey,
-    deleteKey,
-    updateKey,
     readAllDJGear,
-    createDJGear,
-    deleteDJGear,
-    updateDJGear,
     readAllAccessories,
-    createAccessory,
-    deleteAccessory,
-    updateAccessory,
-
+    getBrandsInstruments,
 }
