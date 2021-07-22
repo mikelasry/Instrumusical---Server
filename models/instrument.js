@@ -12,5 +12,11 @@ const Instrument = new Schema({
     price: {type:Number, required:true, min:0},
     sold: {type: Number}
 });
-
+// declare 'text' index for free text searching
+Instrument.index({
+    name:"text",
+    brand:"text",
+    category:"text",
+    description:"text"
+});
 module.exports = mongoose.model("Instrument", Instrument);
