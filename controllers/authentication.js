@@ -25,24 +25,10 @@ module.exports.register = function(req, res){
 module.exports.login = function(req, res) {
 
     passport.authenticate('local', function(_err, _user, _info){
-      var token;
-  
-      // If Passport throws/catches an error
-      if (_err) return res.status(404).json(_err);
-      if(!_user) return res.status(401).json({
-                        "success":false,
-                        "errors":[_info]
-                    });
-  
-      // If a user is found
-      if(_user){
+        if (_err) return res.status(404).json(_err);
+        if(!_user) return res.status(401).json({"success":false,"errors":[_info]});
+        var token;  
         token = _user.generateJwt();
-        res.status(200);
-        res.json({
-          "token" : token
-        });
-      } 
-      
+        return res.status(200).json({"success":true, token : token});
     })(req, res);
-  
-  };
+};

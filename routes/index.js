@@ -7,4 +7,4 @@ var auth = jwt({
     userProperty: 'payload'
 });
 
-router.get('/profile', auth, )
+router.get('/profile', auth, profileController.profileRead);
