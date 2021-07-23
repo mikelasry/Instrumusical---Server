@@ -5,10 +5,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // <<<<<<<<<< Mike's changes: added modules constants for JWT: >>>>>>>>>>
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
+// var path = require('path');
+// var favicon = require('serve-favicon');
+// var logger = require('morgan');
+// var cookieParser = require('cookie-parser');
 var passport = require('passport');
 
 // cross-origin resouce sharing (passing SOP)
@@ -21,14 +21,15 @@ const mongoose = require('mongoose');
 require('./models/user');
 require('./config/passport');
 
-
-//routes
-const instrumentRoute = require('./routes/instrument');//TODO rest of the routes
-const userRoute = require('./routes/user');
-const searchRoute = require('./routes/search');
-
 // define global variables through "config" directory
 require('custom-env').env(process.env.NODE_ENV, './config');
+
+//routes
+const instrumentRoute = require('./routes/instrument'); //TODO rest of the routes
+const userRoute = require('./routes/user');
+const searchRoute = require('./routes/search');
+const authRouter = require('./routes/index');
+
 
 mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -47,6 +48,7 @@ app.use(express.json());
 app.use('/instruments',instrumentRoute);//TODO rest of the modules
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
+app.use('/api', authRouter);
 
 console.log(`listening on ${process.env.PORT}`);
 
