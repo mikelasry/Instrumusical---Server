@@ -3,10 +3,13 @@ const usersController = require('../controllers/user');
 
 router.route("/")
     .get(usersController.getUsers)
-    .post(usersController.createUser);
+    .post(usersController.register);
 
-router.route("/log")
-    .post(usersController.logUser)
+router.route("/login")
+    .post(usersController.login);
+
+router.route("/register")
+    .post(usersController.register)
 
 router.route("/:id")
     .get(usersController.getUserById)
