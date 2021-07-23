@@ -5,13 +5,10 @@ let cheerio = require('cheerio'); // DOM parsing and scraping
 
 
 const getSearchResults = async (searchTxt) =>{
-
     //TODO: massive input checking for db protection
-
     // break 'searchTxt' into tokens and find matches between the tokens
     // and Instrument string fields.
-    
-    return Instrument.find({
+    return await Instrument.find({
         $text:{
             $search: searchTxt
         }
@@ -33,7 +30,7 @@ const getFilteredSearchResult = async(filterList) => {
         maxPriceFilter = parseInt(tempFilter[2]);
     }
     if(categoryFilter == '' && brandFilter == ''){
-        return Instrument.aggregate([
+        return await Instrument.aggregate([
             { 
                 $match:
                 {
@@ -46,7 +43,7 @@ const getFilteredSearchResult = async(filterList) => {
             }]);
         }
     if(categoryFilter == ''){
-    return Instrument.aggregate([
+    return await Instrument.aggregate([
         { 
             $match:
             {
@@ -59,7 +56,7 @@ const getFilteredSearchResult = async(filterList) => {
         }]);
     }
     if(brandFilter == ''){
-        return Instrument.aggregate([
+        return await Instrument.aggregate([
             { 
                 $match:
                 {
@@ -71,7 +68,7 @@ const getFilteredSearchResult = async(filterList) => {
                 }                      
             }]);
         }
-    return Instrument.aggregate([
+    return await Instrument.aggregate([
         { 
             $match:
             {
@@ -83,6 +80,32 @@ const getFilteredSearchResult = async(filterList) => {
             }                      
         }]);
 }
+
+
+const getCheapestResults = async() => {
+    return Instrument.aggregate([
+        {$group : {
+            _id : "$category",
+            min: {$min: "$price"}
+        }}
+    ]);
+}
+//TODO: map reduce
+// handleError = (err) => { console.log(err)}
+// const obj = {};
+// obj.map = 'function () {emit(this.category,this.price) }';
+// obj.reduce = 'function (keys,vals) {return vals.length}';
+// obj.out = {inline:1};
+// obj.verbose = false;
+// //obj.resolveToObject = true;
+// const promise = Instrument.mapReduce(obj);
+// promise.then(function (model){
+//     console.log(model.find({$min : price}));
+//     return model.find().exec();
+// }).then((docs) =>{
+//     console.log(docs);
+// }).then(null, handleError);
+
 
 
 const scrape = async () => {
@@ -137,6 +160,7 @@ const getRandomScrapeInstrument = async () => {
 module.exports = {
     getSearchResults,
     getFilteredSearchResult,
+    getCheapestResults,
     scrape,
     getAllScrapeInstruments,
     getRandomScrapeInstrument
