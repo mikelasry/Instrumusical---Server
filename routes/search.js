@@ -5,6 +5,8 @@ router.route('/')
         .get(searchController.getSearchResults);
 router.route('/filter')
         .get(searchController.getFilteredSearchResult);
+router.route('/cheapest')
+        .get(searchController.getCheapestResults);
 
 router.route('/scrape/one')
         .get(searchController.getRandomScrapeInstrument);

@@ -13,6 +13,12 @@ const getFilteredSearchResult = async (req,res) => {
     return res.status(200).json(results);
 }
 
+const getCheapestResults = async (req,res) => {
+    const results = await searchService.getCheapestResults();
+    if(!results) return res.status(404).json();
+    return res.status(200).json(results);
+}
+
 
 const scrape = async (req,res) => {
     console.log("scrape controller on scrape()");
@@ -38,6 +44,7 @@ const getRandomScrapeInstrument = async (req,res) => {
 module.exports = {
     getSearchResults,
     getFilteredSearchResult,
+    getCheapestResults,
     scrape,
     getAllScrapeInstruments,
     getRandomScrapeInstrument

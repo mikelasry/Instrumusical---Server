@@ -1,30 +1,46 @@
 // web app framework for node.js
 const express = require('express');
+
 // pars incoming request bodies in a middleware before the handlers
 const bodyParser = require('body-parser');
+
+var passport = require('passport');
+
 // cross-origin resouce sharing (passing SOP)
 const cors = require('cors');
+
 // mongoDB driver, provide straigh-forward access and a scheme-based solution
 const mongoose = require('mongoose');
 
 const sketch = require('./models/cms');
 
-
-
+// <<<<<<<<<<  Mike's changes: added requirements for JWT: >>>>>>>>>>
+require('./models/user');
+require('./config/passport');
+// define global variables through "config" directory
+require('custom-env').env(process.env.NODE_ENV, './config');
 
 //routes
-const instrumentRoute = require('./routes/instrument');
+const instrumentRoute = require('./routes/instrument'); //TODO rest of the routes
 const userRoute = require('./routes/user');
 const searchRoute = require('./routes/search');
+const authRouter = require('./routes/index');
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
 
-// define global variables through "config" directory
-require('custom-env').env(process.env.NODE_ENV, './config');
+
 
 mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
 
 var app = express();
+app.use(passport.initialize());
+// Catch unauthorised errors
+app.use(function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+      res.status(401);
+      res.json({"message" : err.name + ": " + err.message});
+    }
+  });
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
