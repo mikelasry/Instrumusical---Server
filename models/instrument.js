@@ -7,7 +7,7 @@ const Instrument = new Schema({
     category: { type: String, required: true},
     imgPath: {type: String, default: ""},
     description: {type: String, default: ""},
-    reviews: {type: [Schema.Types.ObjectId], ref:"Review", default:[]},
+    reviews: {type: [String], ref:"Review", default:[]},
     quantity: {type:Number, default:0, min:0},
     price: {type:Number, required:true, min:0},
     sold: {type: Number}
