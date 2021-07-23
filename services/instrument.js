@@ -1,6 +1,5 @@
 const Instrument = require('../models/instrument');
-
-
+const sketch = require('../models/cms');
 /* ############################## Instruments CRUD ##############################  */
 const createInstrument = async (name,brand,category,imgPath,description,reviews,quantity,price,sold) => {
     const instrument = new Instrument({
@@ -14,6 +13,15 @@ const createInstrument = async (name,brand,category,imgPath,description,reviews,
         price: price,
         sold: sold
     });
+    
+    //CMS implementation
+    for(let review in reviews){
+        let tokens = review.split(' ');
+        for(let token in tokens){
+            sketch.update(token, 1);
+        }
+    }
+    
     return await instrument.save();
 }
 
