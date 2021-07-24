@@ -1,6 +1,5 @@
 const instrumentsService = require('../services/instrument');
 
-    //this.instruments = instruments;
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async (req,res) => {
@@ -18,8 +17,8 @@ const getAllInstruments = async (req,res) => {
 
 const createInstrument = async (req,res) => {
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
-    const newGuitar = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
-    if(newGuitar) return res.status(200).json(newGuitar);
+    const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
+    if(newInstrument) return res.status(200).json(newInstrument);
     return res.status(404).json();
 
 }
