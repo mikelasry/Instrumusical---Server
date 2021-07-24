@@ -27,7 +27,7 @@ const searchRoute = require('./routes/search');
 const authRouter = require('./routes/index');
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
-
+const dataRoute = require('./routes/data');
 
 
 mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -48,6 +48,7 @@ app.use('/instruments',instrumentRoute);
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
 app.use('/stats',statsRoute);
+app.use('/data', dataRoute);
 
 
 

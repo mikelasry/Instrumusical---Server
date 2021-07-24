@@ -10,6 +10,12 @@ const getTopSellers = async (req,res) => {
 }
 
 //  INSTRUMENT   //
+const getAllInstruments = async (req,res) => {
+    const all = await instrumentsService.getAllInstruments();
+    if(all) return res.status(200).json(all);
+    return res.status(404).json();
+}
+
 const createInstrument = async (req,res) => {
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
     const newGuitar = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
@@ -88,4 +94,6 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandsInstruments,
+    getAllInstruments
+    
 }
