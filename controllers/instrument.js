@@ -1,6 +1,5 @@
 const instrumentsService = require('../services/instrument');
 
-    //this.instruments = instruments;
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async (req,res) => {
@@ -10,11 +9,17 @@ const getTopSellers = async (req,res) => {
 }
 
 //  INSTRUMENT   //
+const getAllInstruments = async (req,res) => {
+    const all = await instrumentsService.getAllInstruments();
+    if(all) return res.status(200).json(all);
+    return res.status(404).json();
+}
+
 const createInstrument = async (req,res) => {
     console.log("asdsadsadawsdxas");
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
-    const newGuitar = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
-    if(newGuitar) return res.status(200).json(newGuitar);
+    const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
+    if(newInstrument) return res.status(200).json(newInstrument);
     return res.status(404).json();
 
 }
@@ -89,4 +94,6 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandsInstruments,
+    getAllInstruments
+    
 }
