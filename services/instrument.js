@@ -52,6 +52,7 @@ const updateInstrument = async (id,name,brand,category,imgPath,description,revie
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async () => {
+    console.log("(instService:topSellers)")
     return Instrument.find({}).sort({sold:-1}).limit(4);
 }
 
