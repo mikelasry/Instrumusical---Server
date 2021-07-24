@@ -14,19 +14,19 @@ const mongoose = require('mongoose');
 
 const sketch = require('./models/cms');
 
-// <<<<<<<<<<  Mike's changes: added requirements for JWT: >>>>>>>>>>
 require('./models/user');
 require('./config/passport');
 // define global variables through "config" directory
 require('custom-env').env(process.env.NODE_ENV, './config');
 
 //routes
-const instrumentRoute = require('./routes/instrument'); //TODO rest of the routes
+const instrumentRoute = require('./routes/instrument'); 
 const userRoute = require('./routes/user');
 const searchRoute = require('./routes/search');
-const authRouter = require('./routes/index');
+const authRouter = require('./routes/index'); /// ????
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
+const orderRoute = require('./routes/order');
 
 
 
@@ -48,10 +48,9 @@ app.use('/instruments',instrumentRoute);
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
 app.use('/stats',statsRoute);
+app.use('/order',orderRoute);
 
 
-
-//TODO: new thread.
 // loadig CMS data (overcome server reloading)
 //CMS implementation
 Instrument.collection.find().then(insts => {
