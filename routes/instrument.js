@@ -8,6 +8,9 @@ const instrumentsController = require('../controllers/instrument');
 router.route('/')
         .get(instrumentsController.getTopSellers);
 
+router.route('/all')
+        .get(instrumentsController.getAllInstruments);        
+
 //   BRANDS   //
 router.route('/brands')
         .get(instrumentsController.getBrandsInstruments);

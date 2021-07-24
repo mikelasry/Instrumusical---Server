@@ -19,6 +19,10 @@ const createInstrument = async (name,brand,category,imgPath,description,reviews,
     
     //CMS implementation
     for(let review in reviews){
+        if ( !review.includes(" ")){ // one word
+            sketch.sketch.update(review, 1);
+            continue;
+        }
         let tokens = review.split(' ');
         for(let token in tokens){
             sketch.sketch.update(token, 1);
@@ -49,6 +53,10 @@ const updateInstrument = async (id,name,brand,category,imgPath,description,revie
         if (sold) instrument.sold = sold;
     }
     return instrument;
+}
+
+const getAllInstruments = async () => {
+    return await Instrument.find({});
 }
 
 //   MAIN PAGE LOGIC- top sellers   //
@@ -99,4 +107,5 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandInstrumentList,
+    getAllInstruments
 }

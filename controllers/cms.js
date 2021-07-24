@@ -6,6 +6,13 @@ const getAllStats = async (req,res) => {
     return res.status(404).json();
 }
 
+const getStatsByKeywords = async (req,res) => {
+    const result = await cmsService.getStatsByKeywords(req.query.words);
+    if(result) return res.status(200).json(result);
+    return res.status(404).json();
+}
+
 module.exports = {
-    getAllStats
+    getAllStats,
+    getStatsByKeywords
 }
