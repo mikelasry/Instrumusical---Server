@@ -26,6 +26,9 @@ const searchRoute = require('./routes/search');
 const authRouter = require('./routes/index'); /// ????
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
+
+const store=require('./routes/store');
+
 const dataRoute = require('./routes/data');
 const orderRoute = require('./routes/order');
 
@@ -49,8 +52,11 @@ app.use('/instruments',instrumentRoute);
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
 app.use('/stats',statsRoute);
+
+app.use('/store',store);
 app.use('/data', dataRoute);
 app.use('/order',orderRoute);
+
 
 
 // loadig CMS data (overcome server reloading)
