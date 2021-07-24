@@ -114,7 +114,8 @@ const scrape = async () => {
     const $ = cheerio.load(page.data);
     counter = 0;
     even = true;
-
+    hash = [];
+    objs =[];
    $('ul').each(()=>{ $('li')
     .each(()=>{  $('a')
         .each((index, element) => {
@@ -124,13 +125,17 @@ const scrape = async () => {
                 }else{
                     even = true;
                 }
-                if (counter > 1000)
+                if (counter > 10000)
                     return false;
                 const link1 = $(element).attr('href');
                 const name1 = $(element).attr('title');
-                if(link1 && link1.startsWith('/wiki/') && !link1.includes(':') && !link1.includes('List') && !link1.includes('Main') && !link1.includes('_') ){
+                
+
+                if( !(hash.includes(name1)) && !(hash.includes(link1)) && link1 && link1.startsWith('/wiki/') && !link1.includes(':') && !link1.includes('List') && !link1.includes('Main') && !link1.includes('_') ){
+                    hash.push(name1);
+                    hash.push(link1 );
                     saveObject(link1, name1).catch((r)=>{
-                        console.log(r);
+                         //console.log(r);
                     });
                     
                     console.log(`(${index}) -> ${link1} -- ${name1}`);
@@ -145,7 +150,7 @@ const scrape = async () => {
 }
 
 const saveObject = async (_link, _name) => {
-    return new ScrapeInstrument({name: _name, link: _link}).updateOne();
+    return await (new ScrapeInstrument({name: _name, link: _link})).save();
 }
 
 
