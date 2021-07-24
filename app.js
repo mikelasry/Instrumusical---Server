@@ -27,6 +27,7 @@ const searchRoute = require('./routes/search');
 const authRouter = require('./routes/index');
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
+const store=require('./routes/store');
 
 
 
@@ -48,6 +49,7 @@ app.use('/instruments',instrumentRoute);
 app.use('/user', userRoute);
 app.use('/search',searchRoute);
 app.use('/stats',statsRoute);
+app.use('/store',store);
 
 
 

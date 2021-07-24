@@ -22,16 +22,14 @@ const register = async (_email, _name, _password) => {
     user.setPassword(_password);
 
     var success = true;
-     try{
+    try {
         await user.save();
-     } catch(e) {
-        success = false;
+    } catch (e) {
         console.log(`Errors from saving: ${e}`);
-    }finally{
-        // todo: manage to pass false
-        console.log(`In finally, success: ${success}`)
-        return succuss ? user.generateJwt() : false;
+        return false;
     }
+    return user.generateJwt();
+
 }
 
 // read one

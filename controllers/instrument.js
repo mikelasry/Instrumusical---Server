@@ -11,6 +11,7 @@ const getTopSellers = async (req,res) => {
 
 //  INSTRUMENT   //
 const createInstrument = async (req,res) => {
+    console.log("asdsadsadawsdxas");
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
     const newGuitar = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
     if(newGuitar) return res.status(200).json(newGuitar);

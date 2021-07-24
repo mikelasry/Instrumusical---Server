@@ -8,7 +8,7 @@ var passport = require('passport');
 
 // create
 const register = async (req,res) => {
-    console.log("(userController:register) ---> In register")
+    console.log(`(userController:register) ---> In register ${JSON.stringify(req.body)}`)
     if(!(req.body.name && req.body.email && req.body.password)) 
         return res.status(400).json({
             "success":false, 
@@ -17,7 +17,7 @@ const register = async (req,res) => {
     
     const token = await usersService.register(req.body.email, req.body.name, req.body.password);
     console.log(`(userController:register) ---> Service register answer: ${token}`);
-    const status = token ? 200 : 400;
+    const status = (token) ? 200 : 402;
     return res.status(status).json({
         "success": token ? true : false,
         "token": token ? token : null
