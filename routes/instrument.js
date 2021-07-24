@@ -6,7 +6,8 @@ const instrumentsController = require('../controllers/instrument');
 
 //   MAIN PAGE LOGIC   //
 router.route('/')
-        .get(instrumentsController.getTopSellers);
+        .get(instrumentsController.getTopSellers)
+        .post(instrumentsController.createInstrument);
 
 router.route('/all')
         .get(instrumentsController.getAllInstruments);        
@@ -18,35 +19,30 @@ router.route('/brands')
 //   GUITARS   //
 router.route('/guitars')
         .get(instrumentsController.readAllGuitars)
-        .post(instrumentsController.createInstrument)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
 //   DRUMS   //
 router.route('/drums')
         .get(instrumentsController.readAllDrums)
-        .post(instrumentsController.createInstrument)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
 //   KEYS   //
 router.route('/keys')
         .get(instrumentsController.readAllKeys)
-        .post(instrumentsController.createInstrument)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
 //   DJ GEAR   //
 router.route('/dj-gear')
         .get(instrumentsController.readAllDJGear)
-        .post(instrumentsController.createInstrument)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
 //   ACCESSORIES   //
 router.route('/accessories')
         .get(instrumentsController.readAllAccessories)
-        .post(instrumentsController.createInstrument)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
