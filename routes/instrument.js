@@ -8,7 +8,10 @@ const instrument = require('../models/instrument');
 //   MAIN PAGE LOGIC   //
 router.route('/')
         .get(instrumentsController.getTopSellers)
-        .post(instrumentsController.createInstrument);
+        .post(instrumentsController.createInstrument)
+        .delete(instrumentsController.deleteInstrument)
+        .put(instrumentsController.updateInstrument);
+
 
 router.route('/:id')
         .delete(instrumentsController.deleteInstrument);

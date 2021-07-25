@@ -61,7 +61,7 @@ const getAllInstruments = async () => {
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async () => {
-    return await Instrument.find({}).sort({sold:-1}).limit(4);
+    return await Instrument.find({}).sort({sold:-1}).limit(9);
 }
 
 //   GUITARS   //
