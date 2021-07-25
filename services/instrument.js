@@ -95,6 +95,31 @@ const getBrandInstrumentList = async (brandName) =>{
     return Instrument.find({brand: brandName});
 
 }
+const getTotalReviews = async () =>{
+    
+    var value={};
+    value.map=function(){
+        // var v = this.price*this.quantity;
+        // emit(this.name,v);};
+        for (var idx = 0; idx < this.reviews.length; idx++) {
+            var key = this.reviews[idx];
+            var value = 1;
+            emit("totalReviews", value);
+         }
+
+    };
+    value.reduce=function(a,b){
+        return Array.sum(b);
+   
+    }; 
+     return Instrument.mapReduce(value).then(docs => { 
+        
+        return docs.results;
+        });
+     
+       
+    }
+
 
 module.exports = {
     createInstrument,
@@ -107,5 +132,6 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandInstrumentList,
-    getAllInstruments
+    getAllInstruments,
+    getTotalReviews
 }

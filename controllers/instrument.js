@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const instrumentsService = require('../services/instrument');
 
 
@@ -27,7 +28,7 @@ const deleteInstrument = async (req,res) => {
     success = instrumentsService.deleteInstrument(req.params.id);
     if(!success)
         res.status(404).json({errors:['Instrument not found!']});
-    res.status(200);
+    res.status(200).json({"success":true});
 }
 const updateInstrument = async (req,res) => {
     if (!req.body) return res.status(400).json({errors:['Instrument features required!']});
@@ -82,6 +83,26 @@ const getBrandsInstruments = async (req,res) => {
     return res.status(200).json(brandInstruments);
 }
 
+const uploadInstruments = async (req,res) => {
+    const instrumentArray = req.body.data;
+    // console.log(JSON.stringify( instrumentArray[0].name));
+    // return res.json({"bye":true});
+    // console.log(`instrument upload befor for, ${JSON.stringify(req.body)}`);
+    for(let i=0; i<instrumentArray.length; i++){
+        // console.log(`instrument upload , ${JSON.stringify(instrumentArray[i])}`);
+        const success = await instrumentsService.createInstrument(instrumentArray[i].name,instrumentArray[i].brand,instrumentArray[i].category,instrumentArray[i].imgPath,instrumentArray[i].description,instrumentArray[i].reviews,instrumentArray[i].quantity,instrumentArray[i].price,instrumentArray[i].sold);
+        if(!success) return res.status(404).json({"success":false});
+    }
+    return res.status(200).json({"success":true});
+}
+const getTotalReviews = async (req,res) => {
+    const totalValue = await instrumentsService.getTotalReviews();
+    if(!totalValue) return res.status(404).json();
+    return res.status(200).json(totalValue);
+}
+
+
+
 
 module.exports = {
     getTopSellers,
@@ -94,6 +115,8 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandsInstruments,
-    getAllInstruments
+    getAllInstruments,
+    uploadInstruments,
+    getTotalReviews,
     
 }
