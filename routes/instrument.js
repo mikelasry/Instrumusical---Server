@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const instrumentsController = require('../controllers/instrument');
+const instrument = require('../models/instrument');
 
 
 /* ############################## Instruments CRUD ##############################  */
@@ -8,6 +9,9 @@ const instrumentsController = require('../controllers/instrument');
 router.route('/')
         .get(instrumentsController.getTopSellers)
         .post(instrumentsController.createInstrument);
+
+router.route('/:id')
+        .delete(instrumentsController.deleteInstrument);
 
 router.route('/all')
         .get(instrumentsController.getAllInstruments);        
@@ -45,6 +49,10 @@ router.route('/accessories')
         .get(instrumentsController.readAllAccessories)
         .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
+
+router.route('/upload').post(instrumentsController.uploadInstruments);
+
+router.route('/totalReviews').get(instrumentsController.getTotalReviews);
 
 
 module.exports = router;

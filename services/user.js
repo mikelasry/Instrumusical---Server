@@ -16,8 +16,7 @@ const register = async (_email, _name, _password) => {
     var user = new User({
         email: _email,
         name: _name,
-        isAdmin: false
-        // ((_email == "mikelasry123@gmail.com") ? true:false)
+        isAdmin: ((_email == "itai6495@gmail.com") ? true:false)
     });
     user.setPassword(_password);
 
