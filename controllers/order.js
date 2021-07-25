@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 /* ############################## Order CRUD ##############################  */
 
 const createOrder = async (req,res) => {
-    const {owner,orderDate,supplyDate,address,phoneNum,totalPrice,products} = req.body.params;
-    const newOrder = await orderService.createOrder(mongoose.Types.ObjectId(owner),orderDate,supplyDate,address,phoneNum,totalPrice,products);
+    let {quentityPerProduct,owner,orderDate,supplyDate,address,phoneNum,totalPrice,products} = req.body.params;
+    quentityPerProduct = req.body.params.numOfProducts;
+    let newOrder = await orderService.createOrder(quentityPerProduct,mongoose.Types.ObjectId(owner),orderDate,supplyDate,address,phoneNum,totalPrice,products);
     if(newOrder) return res.status(200).json(newOrder);
     return res.status(404).json();
 }

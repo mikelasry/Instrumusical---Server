@@ -1,9 +1,17 @@
 const Order = require('../models/order');
+const Instrument = require('../models/instrument');
+const instrumentsService = require('../services/instrument');
+
 
 /* ############################## Order CRUD ##############################  */
-
-const createOrder = async (owner,orderDate,supplyDate,address,phoneNum,totalPrice,products) => {
-
+const createOrder = async (quentityPerProduct,owner,orderDate,supplyDate,address,phoneNum,totalPrice,products) => {
+    for (let i in products){
+        let instrument = products[i];
+        instrument.sold += (quentityPerProduct[i]);
+        instrumentsService.updateInstrument(instrument._id,instrument.name,instrument.brand,
+            instrument.category,instrument.imgPath, instrument.description,instrument.reviews,
+            instrument.quantity,instrument.sold);
+     }
     const order = new Order({
         owner: owner,
         orderDate: orderDate,

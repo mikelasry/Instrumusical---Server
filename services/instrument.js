@@ -39,7 +39,7 @@ const deleteInstrument = async (id) => {
     return true;
 }
 
-const updateInstrument = async (id,name,brand,category,imgPath,description,reviews,quantity,price) => {
+const updateInstrument = async (id,name,brand,category,imgPath,description,reviews,quantity,price,sold) => {
     const instrument = await Instrument.findById(id);
     if (instrument){
         if (name) instrument.name = name;
@@ -62,38 +62,38 @@ const getAllInstruments = async () => {
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async () => {
     console.log("(instService:topSellers)")
-    return Instrument.find({}).sort({sold:-1}).limit(4);
+    return await Instrument.find({}).sort({sold:-1}).limit(4);
 }
 
 //   GUITARS   //
 
 const readAllGuitars = async () => {
-    return Instrument.find({category:"guitars"})
+    return await Instrument.find({category:"guitars"})
 }
 
 //   DRUMS   //
 const readAllDrums = async () => {
-    return Instrument.find({category:"drums"})
+    return await Instrument.find({category:"drums"})
 }
 
 //   KEYS   //
 const readAllKeys = async () => {
-    return Instrument.find({category:"keys"})
+    return await Instrument.find({category:"keys"})
 }
 
 //   DJ GEAR   //
 const readAllDJGear = async () => {
-    return Instrument.find({category:"DJGear"})
+    return await Instrument.find({category:"DJGear"})
 }
 
 //   ACCESSORIES   //
 const readAllAccessories = async () => {
-    return Instrument.find({category:"accessories"})
+    return await Instrument.find({category:"accessories"})
 }
 
 //   BRANDS   //
 const getBrandInstrumentList = async (brandName) =>{
-    return Instrument.find({brand: brandName});
+    return await Instrument.find({brand: brandName});
 
 }
 

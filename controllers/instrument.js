@@ -16,7 +16,6 @@ const getAllInstruments = async (req,res) => {
 }
 
 const createInstrument = async (req,res) => {
-    console.log("asdsadsadawsdxas");
     const {name,brand,category,imgPath,description,reviews,quantity,price, sold} = req.body;
     const newInstrument = await instrumentsService.createInstrument(name,brand,category,imgPath,description,reviews,quantity,price,sold);
     if(newInstrument) return res.status(200).json(newInstrument);
@@ -31,8 +30,8 @@ const deleteInstrument = async (req,res) => {
 }
 const updateInstrument = async (req,res) => {
     if (!req.body) return res.status(400).json({errors:['Instrument features required!']});
-    const {name,brand,category,imgPath,description,reviews,quantity,price} = req.body;
-    const updatedInstrument = await instrumentsService.updateInstrument(req.param.id, name,brand,category,imgPath,description,reviews,quantity,price);
+    const {name,brand,category,imgPath,description,reviews,quantity,price,sold} = req.body;
+    const updatedInstrument = await instrumentsService.updateInstrument(req.param.id, name,brand,category,imgPath,description,reviews,quantity,price,sold);
     if(updatedInstrument) return res.status(200).json(updateInstrument);
     return res.status(400).json({errors:['Update failed, please try again']});
 }
