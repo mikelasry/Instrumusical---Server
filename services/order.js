@@ -4,13 +4,23 @@ const instrumentsService = require('../services/instrument');
 
 
 /* ############################## Order CRUD ##############################  */
-const createOrder = async (quentityPerProduct,owner,orderDate,supplyDate,address,phoneNum,totalPrice,products) => {
+const createOrder = async (quantityPerProduct,owner,orderDate,supplyDate,address,phoneNum,totalPrice,products) => {
     for (let i in products){
         let instrument = products[i];
-        instrument.sold += (quentityPerProduct[i]);
+        let missing = quantityPerProduct[i] - instrument.quantity;
+        if(missing >= 0){
+            console.log(`Order of ${owner} id :`);
+            console.log(`missing ${missing} ${instrument.name}`);
+            instrument.sold += (instrument.quantity-1);
+            instrument.quantity = 1;
+        }
+        else{
+            instrument.sold += quantityPerProduct[i];
+            instrument.quantity -= quantityPerProduct[i];
+        }
         instrumentsService.updateInstrument(instrument._id,instrument.name,instrument.brand,
             instrument.category,instrument.imgPath, instrument.description,instrument.reviews,
-            instrument.quantity,instrument.sold);
+            instrument.quantity,instrument.price,instrument.sold);
      }
     const order = new Order({
         owner: owner,
