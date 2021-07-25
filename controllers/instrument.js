@@ -84,11 +84,7 @@ const getBrandsInstruments = async (req,res) => {
 
 const uploadInstruments = async (req,res) => {
     const instrumentArray = req.body.data;
-    // console.log(JSON.stringify( instrumentArray[0].name));
-    // return res.json({"bye":true});
-    // console.log(`instrument upload befor for, ${JSON.stringify(req.body)}`);
-    for(let i=0; i<instrumentArray.length; i++){
-        // console.log(`instrument upload , ${JSON.stringify(instrumentArray[i])}`);
+    for(let i=0; i < instrumentArray.length; i++){
         const success = await instrumentsService.createInstrument(instrumentArray[i].name,instrumentArray[i].brand,instrumentArray[i].category,instrumentArray[i].imgPath,instrumentArray[i].description,instrumentArray[i].reviews,instrumentArray[i].quantity,instrumentArray[i].price,instrumentArray[i].sold);
         if(!success) return res.status(404).json({"success":false});
     }

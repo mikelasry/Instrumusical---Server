@@ -48,11 +48,11 @@ const updateInstrument = async (id,name,brand,category,imgPath,description,revie
         if (imgPath) instrument.imgPath = imgPath;
         if (description) instrument.description = description;
         if (reviews) instrument.reviews = reviews;
-        if (quantity) instrument.quantity = quantity;
         if (price) instrument.price = price;
+        if (quantity) instrument.quantity = quantity;
         if (sold) instrument.sold = sold;
     }
-    return instrument;
+    return await instrument.save();
 }
 
 const getAllInstruments = async () => {
@@ -61,7 +61,6 @@ const getAllInstruments = async () => {
 
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async () => {
-    console.log("(instService:topSellers)")
     return await Instrument.find({}).sort({sold:-1}).limit(4);
 }
 
@@ -83,7 +82,7 @@ const readAllKeys = async () => {
 
 //   DJ GEAR   //
 const readAllDJGear = async () => {
-    return await Instrument.find({category:"DJGear"})
+    return await Instrument.find({category:"dj-gears"})
 }
 
 //   ACCESSORIES   //
