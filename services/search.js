@@ -2,6 +2,7 @@ const Instrument = require('../models/instrument');
 const ScrapeInstrument = require('../models/scrape-instrument');
 let axios = require('axios'); // http functionallity
 let cheerio = require('cheerio'); // DOM parsing and scraping
+const mongoose = require('mongoose');
 
 
 const getSearchResults = async (searchTxt) =>{
@@ -82,13 +83,25 @@ const getFilteredSearchResult = async(filterList) => {
 }
 
 
-const getCheapestResults = async() => {
-    return Instrument.aggregate([
-        {$group : {
-            _id : "$category",
-            min: {$min: "$price"}
-        }}
-    ]);
+const getCheapestResults = async () => {
+    
+    instrumentsIds = [];
+
+    for await (const doc of  Instrument.aggregate([
+        {"$group": 
+            { _id: "$category", "doc" : {
+                "$min":{
+                    "id":"$_id"
+                }
+                }
+            }
+        }
+        
+    ]).cursor())
+    {
+        instrumentsIds.push(Instrument.findOne({_id: doc.doc.id}));
+    }
+    return Promise.all(instrumentsIds);
 }
 //TODO: map reduce
 // handleError = (err) => { console.log(err)}
