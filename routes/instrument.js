@@ -16,6 +16,9 @@ router.route('/')
 router.route('/:id')
         .delete(instrumentsController.deleteInstrument);
 
+router.route('/:id')
+        .delete(instrumentsController.deleteInstrument)
+
 router.route('/all')
         .get(instrumentsController.getAllInstruments);        
 
