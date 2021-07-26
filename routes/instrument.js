@@ -9,10 +9,16 @@ const instrument = require('../models/instrument');
 router.route('/')
         .get(instrumentsController.getTopSellers)
         .post(instrumentsController.createInstrument)
-        .delete(instrumentsController.deleteInstrument);
+        .delete(instrumentsController.deleteInstrument)
+        .put(instrumentsController.updateInstrument);
+
+
 
 router.route('/:id')
         .delete(instrumentsController.deleteInstrument);
+
+router.route('/:id')
+        .delete(instrumentsController.deleteInstrument)
 
 router.route('/all')
         .get(instrumentsController.getAllInstruments);        
