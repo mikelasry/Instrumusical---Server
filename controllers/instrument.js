@@ -32,6 +32,7 @@ const createInstrument = async (req, res) => {
     }
     return res.status(404).json();
 }
+
 const deleteInstrument = async (req, res) => {
     success = instrumentsService.deleteInstrument(req.params.id);
     if (!success) res.status(404).json({ errors: ['Instrument not found!'] });
@@ -106,7 +107,7 @@ const uploadInstruments = async (req,res) => {
 const getTotalReviews = async (req,res) => {
     const totalValue = await instrumentsService.getTotalReviews();
     if(!totalValue) return res.status(404).json();
-    return res.status(200).json(totalValue);
+    return res.status(200).json(totalValue[0]);
 }
 
 

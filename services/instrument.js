@@ -96,11 +96,9 @@ const getBrandInstrumentList = async (brandName) =>{
 
 }
 const getTotalReviews = async () =>{
-    
+   // console.log("in map reduce!!!!!!!!!!!");
     var value={};
     value.map=function(){
-        // var v = this.price*this.quantity;
-        // emit(this.name,v);};
         for (var idx = 0; idx < this.reviews.length; idx++) {
             var key = this.reviews[idx];
             var value = 1;

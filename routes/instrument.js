@@ -13,6 +13,7 @@ router.route('/')
         .put(instrumentsController.updateInstrument);
 
 
+
 router.route('/:id')
         .delete(instrumentsController.deleteInstrument);
 
@@ -29,7 +30,6 @@ router.route('/brands')
 //   GUITARS   //
 router.route('/guitars')
         .get(instrumentsController.readAllGuitars)
-        .delete(instrumentsController.deleteInstrument)
         .put(instrumentsController.updateInstrument);
 
 //   DRUMS   //
