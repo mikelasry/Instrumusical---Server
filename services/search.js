@@ -21,14 +21,18 @@ const getFilteredSearchResult = async(filterList) => {
     categoryFilter = '';
     brandFilter= '';
     minPriceFilter = 0;
-    maxPriceFilter = 10000;
+    maxPriceFilter = 100000;
 
     if(!filterList[0] == '') categoryFilter = filterList[0].toLowerCase();
     if(!filterList[1] == '') brandFilter = filterList[1].toLowerCase();
     if(!filterList[2] == ''){
-        let tempFilter = filterList[2].split(/[$,-]/);
-        minPriceFilter = parseInt(tempFilter[0]);
-        maxPriceFilter = parseInt(tempFilter[2]);
+        if(filterList[2].startsWith('2000')){
+            minPriceFilter = 2000;
+        }else{
+            let tempFilter = filterList[2].split(/[$,-]/);
+            minPriceFilter = parseInt(tempFilter[0]);
+            maxPriceFilter = parseInt(tempFilter[2]);
+        }
     }
     if(categoryFilter == '' && brandFilter == ''){
         return await Instrument.aggregate([
@@ -91,7 +95,7 @@ const getCheapestResults = async () => {
         {"$group": 
             { _id: "$category", "doc" : {
                 "$min":{
-                    "id":"$_id"
+                    "price": "$price",
                 }
                 }
             }
@@ -99,26 +103,10 @@ const getCheapestResults = async () => {
         
     ]).cursor())
     {
-        instrumentsIds.push(Instrument.findOne({_id: doc.doc.id}));
+        instrumentsIds.push(Instrument.findOne({category: doc._id, price: doc.doc.price}));
     }
     return Promise.all(instrumentsIds);
 }
-//TODO: map reduce
-// handleError = (err) => { console.log(err)}
-// const obj = {};
-// obj.map = 'function () {emit(this.category,this.price) }';
-// obj.reduce = 'function (keys,vals) {return vals.length}';
-// obj.out = {inline:1};
-// obj.verbose = false;
-// //obj.resolveToObject = true;
-// const promise = Instrument.mapReduce(obj);
-// promise.then(function (model){
-//     console.log(model.find({$min : price}));
-//     return model.find().exec();
-// }).then((docs) =>{
-//     console.log(docs);
-// }).then(null, handleError);
-
 
 
 const scrape = async () => {

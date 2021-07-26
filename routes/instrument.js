@@ -17,7 +17,7 @@ router.route('/:id')
         .delete(instrumentsController.deleteInstrument);
 
 router.route('/all')
-        .get(instrumentsController.getAllInstruments);        
+        .get(instrumentsController.getAllInstruments);
 
 //   BRANDS   //
 router.route('/brands')

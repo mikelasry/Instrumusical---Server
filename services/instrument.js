@@ -59,6 +59,10 @@ const getAllInstruments = async () => {
     return await Instrument.find({});
 }
 
+// const deleteAll = async () =>{
+//     return await Instrument.remove({}); // deleteMany
+// }
+
 //   MAIN PAGE LOGIC- top sellers   //
 const getTopSellers = async () => {
     return await Instrument.find({}).sort({sold:-1}).limit(9);

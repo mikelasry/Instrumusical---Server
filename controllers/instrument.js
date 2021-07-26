@@ -9,6 +9,12 @@ const getTopSellers = async (req,res) => {
     return res.status(404).json();
 }
 
+// const deleteAll = async (req, res) => {
+//     const result = await instrumentsService.deleteAll();
+//     if(result) return res.status(200).json(result);
+//     return res.status(404).json();
+// }
+
 //  INSTRUMENT   //
 const getAllInstruments = async (req,res) => {
     const all = await instrumentsService.getAllInstruments();
@@ -112,6 +118,6 @@ module.exports = {
     getBrandsInstruments,
     getAllInstruments,
     uploadInstruments,
-    getTotalReviews,
+    getTotalReviews
     
 }
