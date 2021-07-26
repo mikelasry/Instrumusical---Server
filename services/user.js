@@ -1,15 +1,5 @@
 const User = require('../models/user');
 
-// create
-// const createUser = async (_email, _password, _isAdmin) => {
-//     console.log("service -> Create User\nparams are: " + _email +", "+_password+", "+_isAdmin);
-//     const user = new User({
-//         email : _email,
-//         password : _password, 
-//         isAdmin : _isAdmin
-//     });
-//     return await user.save();
-// }
 
 const register = async (_email, _name, _password) => {
     // console.log("service -> Create User");
@@ -17,7 +7,6 @@ const register = async (_email, _name, _password) => {
         email: _email,
         name: _name,
         isAdmin: ((_email == "mikelasry123@gmail.com" || _email == "dshmirer@gmail.com") ? true:false)
-        // 
     });
     user.setPassword(_password);
 

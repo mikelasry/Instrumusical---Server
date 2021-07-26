@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const instrumentsService = require('../services/instrument');
 
 
@@ -15,6 +16,7 @@ const getAllInstruments = async (req, res) => {
     return res.status(404).json();
 }
 
+
 const createInstrument = async (req, res) => {
     console.log("(instCntrlr:create) ---> ");
     const { name, brand, category, imgPath, description, reviews, quantity, price, sold } = req.body;
@@ -29,7 +31,6 @@ const createInstrument = async (req, res) => {
         return res.status(200).json(newInstrument);
     }
     return res.status(404).json();
-
 }
 const deleteInstrument = async (req, res) => {
     success = instrumentsService.deleteInstrument(req.params.id);
@@ -38,14 +39,15 @@ const deleteInstrument = async (req, res) => {
     let msg = `{"action":"del","id":"${req.params.id}"}`;
     console.log(msg);
     for (const s of sockets) s.send(msg);
+    res.status(200).json({"success":true});
 }
 
-const updateInstrument = async (req, res) => {
-    if (!req.body) return res.status(400).json({ errors: ['Instrument features required!'] });
-    const { name, brand, category, imgPath, description, reviews, quantity, price } = req.body;
-    const updatedInstrument = await instrumentsService.updateInstrument(req.param.id, name, brand, category, imgPath, description, reviews, quantity, price);
-    if (updatedInstrument) return res.status(200).json(updateInstrument);
-    return res.status(400).json({ errors: ['Update failed, please try again'] });
+const updateInstrument = async (req,res) => {
+    if (!req.body) return res.status(400).json({errors:['Instrument features required!']});
+    const {name,brand,category,imgPath,description,reviews,quantity,price,sold} = req.body;
+    const updatedInstrument = await instrumentsService.updateInstrument(req.param.id, name,brand,category,imgPath,description,reviews,quantity,price,sold);
+    if(updatedInstrument) return res.status(200).json(updateInstrument);
+    return res.status(400).json({errors:['Update failed, please try again']});
 }
 
 //   GUITARS   //
@@ -93,6 +95,22 @@ const getBrandsInstruments = async (req, res) => {
     return res.status(200).json(brandInstruments);
 }
 
+const uploadInstruments = async (req,res) => {
+    const instrumentArray = req.body.data;
+    for(let i=0; i < instrumentArray.length; i++){
+        const success = await instrumentsService.createInstrument(instrumentArray[i].name,instrumentArray[i].brand,instrumentArray[i].category,instrumentArray[i].imgPath,instrumentArray[i].description,instrumentArray[i].reviews,instrumentArray[i].quantity,instrumentArray[i].price,instrumentArray[i].sold);
+        if(!success) return res.status(404).json({"success":false});
+    }
+    return res.status(200).json({"success":true});
+}
+const getTotalReviews = async (req,res) => {
+    const totalValue = await instrumentsService.getTotalReviews();
+    if(!totalValue) return res.status(404).json();
+    return res.status(200).json(totalValue);
+}
+
+
+
 
 module.exports = {
     getTopSellers,
@@ -105,6 +123,8 @@ module.exports = {
     readAllDJGear,
     readAllAccessories,
     getBrandsInstruments,
-    getAllInstruments
-
+    getAllInstruments,
+    uploadInstruments,
+    getTotalReviews,
+   
 }
