@@ -9,6 +9,9 @@ router.route('/')
         .get(instrumentsController.getTopSellers)
         .post(instrumentsController.createInstrument);
 
+router.route('/:id')
+        .delete(instrumentsController.deleteInstrument)
+
 router.route('/all')
         .get(instrumentsController.getAllInstruments);        
 

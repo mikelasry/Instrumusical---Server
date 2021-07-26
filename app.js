@@ -4,6 +4,7 @@ const express = require('express');
 // pars incoming request bodies in a middleware before the handlers
 const bodyParser = require('body-parser');
 
+// passport middle-ware to handle JWT
 var passport = require('passport');
 
 // cross-origin resouce sharing (passing SOP)
@@ -20,55 +21,83 @@ require('./config/passport');
 require('custom-env').env(process.env.NODE_ENV, './config');
 
 //routes
-const instrumentRoute = require('./routes/instrument'); 
+const router = require('express').Router();
+
+const instrumentRoute = require('./routes/instrument');
 const userRoute = require('./routes/user');
 const searchRoute = require('./routes/search');
-const authRouter = require('./routes/index'); /// ????
+
 const statsRoute = require('./routes/stats');
 const Instrument = require('./models/instrument');
 
-const store=require('./routes/store');
+const store = require('./routes/store');
 
 const dataRoute = require('./routes/data');
 const orderRoute = require('./routes/order');
 
+var adminRouter = require('./routes/admin')
 
 
-mongoose.connect(process.env.CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
 
 var app = express();
 app.use(passport.initialize());
+
 // Catch unauthorised errors
 app.use(function (err, req, res, next) {
     if (err.name === 'UnauthorizedError') {
-      res.status(401);
-      res.json({"message" : err.name + ": " + err.message});
+        res.status(401);
+        res.json({ "message": err.name + ": " + err.message });
     }
-  });
+});
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/instruments',instrumentRoute);
+app.use('/instruments', instrumentRoute);
 app.use('/user', userRoute);
-app.use('/search',searchRoute);
-app.use('/stats',statsRoute);
-
-app.use('/store',store);
+app.use('/search', searchRoute);
+app.use('/stats', statsRoute);
+// app.use('/admin', adminRouter)
+app.use('/store', store);
 app.use('/data', dataRoute);
-app.use('/order',orderRoute);
+app.use('/order', orderRoute);
 
+// ------------------------------------ WEBSOCKET START ----------------------------
 
+// // set web sockets for admins
+// var sockets = new Set();
+// const http = require('http').Server(app);
+// const io = require('socket.io')(http);
+
+// io.on("connection", socket => {
+//     sockets.add(socket);
+
+//     let previousId;
+
+//     const safeJoin = currentId => {
+//         socket.leave(previousId);
+//         socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
+//         previousId = currentId;
+//     }
+
+//     socket.on("adminin", userId => {
+//         safeJoin(userId);
+//         socket.emit("document", documents[docId]);
+//     });
+// })
+
+// ------------------------------------ WEBSOCKET END ----------------------------
 
 // loadig CMS data (overcome server reloading)
 //CMS implementation
 Instrument.collection.find().then(insts => {
     insts.forEach(
-        (doc)=>{
+        (doc) => {
             let reviews = doc.reviews;
-            if(reviews.length > 0){
-                for(let review of reviews){
+            if (reviews.length > 0) {
+                for (let review of reviews) {
                     let tokens = review.split(" ");
-                    for(let token of tokens){
+                    for (let token of tokens) {
                         sketch.sketch.update(token, 1);
                     }
                 }
@@ -77,8 +106,15 @@ Instrument.collection.find().then(insts => {
     );
 });
 
-app.listen(process.env.PORT);
+// server = app.listen(process.env.PORT);
 console.log(`listening on ${process.env.PORT}`);
 
+var expressWs = require('express-ws')(app);
+var sockets = new Set();
+app.ws('/m4z1edzxh283ylhrazs6', function(ws, req) {
+    console.log(`Connection made! ${ws}`);
+    sockets.add(ws);  
+});
 
-
+app.set("socketsio", sockets);
+app.listen(process.env.PORT);
