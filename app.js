@@ -37,7 +37,6 @@ const orderRoute = require('./routes/order');
 
 var adminRouter = require('./routes/admin')
 
-
 mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
 
 var app = express();
@@ -61,32 +60,6 @@ app.use('/stats', statsRoute);
 app.use('/store', store);
 app.use('/data', dataRoute);
 app.use('/order', orderRoute);
-
-// ------------------------------------ WEBSOCKET START ----------------------------
-
-// // set web sockets for admins
-// var sockets = new Set();
-// const http = require('http').Server(app);
-// const io = require('socket.io')(http);
-
-// io.on("connection", socket => {
-//     sockets.add(socket);
-
-//     let previousId;
-
-//     const safeJoin = currentId => {
-//         socket.leave(previousId);
-//         socket.join(currentId, () => console.log(`Socket ${socket.id} joined room ${currentId}`));
-//         previousId = currentId;
-//     }
-
-//     socket.on("adminin", userId => {
-//         safeJoin(userId);
-//         socket.emit("document", documents[docId]);
-//     });
-// })
-
-// ------------------------------------ WEBSOCKET END ----------------------------
 
 // loadig CMS data (overcome server reloading)
 //CMS implementation
